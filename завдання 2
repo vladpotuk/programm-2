@@ -1,0 +1,41 @@
+import string
+
+def get_longest_words(text):
+    words = text.split()
+    longest_length = max(len(word.strip(string.punctuation)) for word in words)
+    longest_words = [word.strip(string.punctuation) for word in words if len(word.strip(string.punctuation)) == longest_length]
+    return longest_words
+
+def get_word_length_frequency(text):
+    words = text.split()
+    word_length_frequency = {}
+
+    for word in words:
+        word_length = len(word.strip(string.punctuation))
+        if word_length in word_length_frequency:
+            word_length_frequency[word_length].append(word.strip(string.punctuation))
+        else:
+            word_length_frequency[word_length] = [word.strip(string.punctuation)]
+
+    return word_length_frequency
+
+def get_most_frequent_word_length(dict_text):
+    max_frequency = max(len(words) for words in dict_text.values())
+    most_frequent_lengths = [length for length, words in dict_text.items() if len(words) == max_frequency]
+    return most_frequent_lengths
+
+# Введення тексту користувачем
+text = input("Введіть текст: ")
+
+# 2.1 Знайти найдовше слово (слова)
+longest_words = get_longest_words(text)
+print("Найдовше слово(а):", longest_words)
+
+# 2.2 Знайти частотну характеристику слова
+dict_text = get_word_length_frequency(text)
+print("Частотна характеристика слів:", dict_text)
+
+# 2.3 Знайти слова найчастішеї довжини
+most_frequent_lengths = get_most_frequent_word_length(dict_text)
+most_frequent_words = [word for word in dict_text[most_frequent_lengths[0]]]
+print(f"Слова найчастішеї довжини ({most_frequent_lengths[0]} символів):", most_frequent_words)
